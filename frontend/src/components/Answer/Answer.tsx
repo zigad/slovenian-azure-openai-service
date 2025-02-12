@@ -305,13 +305,13 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
                   <Text
                     className={styles.accordionTitle}
                     onClick={toggleIsRefAccordionOpen}
-                    aria-label="Open references"
+                    aria-label="Odpri referenco"
                     tabIndex={0}
                     role="button">
                     <span>
                       {parsedAnswer.citations.length > 1
-                        ? parsedAnswer.citations.length + ' references'
-                        : '1 reference'}
+                        ? parsedAnswer.citations.length + ' referenc'
+                        : '1 referenca'}
                     </span>
                   </Text>
                   <FontIcon
@@ -324,7 +324,7 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
             </Stack.Item>
           )}
           <Stack.Item className={styles.answerDisclaimerContainer}>
-            <span className={styles.answerDisclaimer}>AI-generated content may be incorrect</span>
+            <span className={styles.answerDisclaimer}>Odgovori ustvarjeni s pomočjo umetne inteligence so lahko napačni.</span>
           </Stack.Item>
           {!!answer.exec_results?.length && (
             <Stack.Item onKeyDown={e => (e.key === 'Enter' || e.key === ' ' ? toggleIsRefAccordionOpen() : null)}>
