@@ -41,7 +41,7 @@ const sampleCitations: Citation[] = [
 ]
 
 const sampleAnswer: AskResponse = {
-  answer: 'This is an example answer with citations [doc1] and [doc2].',
+  answer: 'To je primer odgovora s citati [doc1] in [doc2].',
   citations: cloneDeep(sampleCitations),
   generated_chart: null
 }
