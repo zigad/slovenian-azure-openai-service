@@ -95,7 +95,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             accept="image/*"
             className={styles.fileInput}
           />
-          <label htmlFor="fileInput" className={styles.fileLabel} aria-label='Upload Image'>
+          <label htmlFor="fileInput" className={styles.fileLabel} aria-label='Naloži sliko'>
             <FontIcon
               className={styles.fileIcon}
               iconName={'PhotoCollection'}
@@ -103,18 +103,18 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend, conv
             />
           </label>
         </div>)}
-      {base64Image && <img className={styles.uploadedImage} src={base64Image} alt="Uploaded Preview" />}
+      {base64Image && <img className={styles.uploadedImage} src={base64Image} alt="Naložen predogled" />}
       <div
         className={styles.questionInputSendButtonContainer}
         role="button"
         tabIndex={0}
-        aria-label="Ask question button"
+        aria-label="Gumb za vprašanje"
         onClick={sendQuestion}
         onKeyDown={e => (e.key === 'Enter' || e.key === ' ' ? sendQuestion() : null)}>
         {sendQuestionDisabled ? (
           <SendRegular className={styles.questionInputSendButtonDisabled} />
         ) : (
-          <img src={Send} className={styles.questionInputSendButton} alt="Send Button" />
+          <img src={Send} className={styles.questionInputSendButton} alt="Gumb pošlji" />
         )}
       </div>
       <div className={styles.questionInputBottomBorder} />

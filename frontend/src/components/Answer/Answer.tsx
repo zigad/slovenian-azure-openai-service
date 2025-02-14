@@ -154,36 +154,36 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
   const UnhelpfulFeedbackContent = () => {
     return (
       <>
-        <div>Why wasn't this response helpful?</div>
+        <div>Zakaj ta odgovor ni bil koristen?</div>
         <Stack tokens={{ childrenGap: 4 }}>
           <Checkbox
-            label="Citations are missing"
+            label="Manjkajo citati"
             id={Feedback.MissingCitation}
             defaultChecked={negativeFeedbackList.includes(Feedback.MissingCitation)}
             onChange={updateFeedbackList}></Checkbox>
           <Checkbox
-            label="Citations are wrong"
+            label="Citati so napačni"
             id={Feedback.WrongCitation}
             defaultChecked={negativeFeedbackList.includes(Feedback.WrongCitation)}
             onChange={updateFeedbackList}></Checkbox>
           <Checkbox
-            label="The response is not from my data"
+            label="Odgovor ni iz mojih podatkov"
             id={Feedback.OutOfScope}
             defaultChecked={negativeFeedbackList.includes(Feedback.OutOfScope)}
             onChange={updateFeedbackList}></Checkbox>
           <Checkbox
-            label="Inaccurate or irrelevant"
+            label="Nenatančno ali nepomembno"
             id={Feedback.InaccurateOrIrrelevant}
             defaultChecked={negativeFeedbackList.includes(Feedback.InaccurateOrIrrelevant)}
             onChange={updateFeedbackList}></Checkbox>
           <Checkbox
-            label="Other"
+            label="Drugo"
             id={Feedback.OtherUnhelpful}
             defaultChecked={negativeFeedbackList.includes(Feedback.OtherUnhelpful)}
             onChange={updateFeedbackList}></Checkbox>
         </Stack>
         <div onClick={() => setShowReportInappropriateFeedback(true)} style={{ color: '#115EA3', cursor: 'pointer' }}>
-          Report inappropriate content
+          Prijavi neprimerno vsebino
         </div>
       </>
     )
@@ -264,7 +264,7 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
                 <Stack horizontal horizontalAlign="space-between">
                   <ThumbLike20Filled
                     aria-hidden="false"
-                    aria-label="Like this response"
+                    aria-label="Všečkaj ta odgovor"
                     onClick={() => onLikeResponseClicked()}
                     style={
                       feedbackState === Feedback.Positive ||
@@ -275,7 +275,7 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
                   />
                   <ThumbDislike20Filled
                     aria-hidden="false"
-                    aria-label="Dislike this response"
+                    aria-label="Ta odgovor mi ni všeč"
                     onClick={() => onDislikeResponseClicked()}
                     style={
                       feedbackState !== Feedback.Positive &&
@@ -305,13 +305,13 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
                   <Text
                     className={styles.accordionTitle}
                     onClick={toggleIsRefAccordionOpen}
-                    aria-label="Open references"
+                    aria-label="Odpri referenco"
                     tabIndex={0}
                     role="button">
                     <span>
                       {parsedAnswer.citations.length > 1
-                        ? parsedAnswer.citations.length + ' references'
-                        : '1 reference'}
+                        ? parsedAnswer.citations.length + ' referenc'
+                        : '1 referenca'}
                     </span>
                   </Text>
                   <FontIcon
@@ -324,7 +324,7 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
             </Stack.Item>
           )}
           <Stack.Item className={styles.answerDisclaimerContainer}>
-            <span className={styles.answerDisclaimer}>AI-generated content may be incorrect</span>
+            <span className={styles.answerDisclaimer}>Odgovori ustvarjeni s pomočjo umetne inteligence so lahko napačni.</span>
           </Stack.Item>
           {!!answer.exec_results?.length && (
             <Stack.Item onKeyDown={e => (e.key === 'Enter' || e.key === ' ' ? toggleIsRefAccordionOpen() : null)}>
@@ -333,7 +333,7 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
                   <Text
                     className={styles.accordionTitle}
                     onClick={() => onExectResultClicked(answer.message_id ?? '')}
-                    aria-label="Open Intents"
+                    aria-label="Odprite namere"
                     tabIndex={0}
                     role="button">
                     <span>
@@ -394,18 +394,18 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
           ]
         }}
         dialogContentProps={{
-          title: 'Submit Feedback',
+          title: 'Pošlji povratne informacije',
           showCloseButton: true
         }}>
         <Stack tokens={{ childrenGap: 4 }}>
-          <div>Your feedback will improve this experience.</div>
+          <div>Vaše povratne informacije bodo izboljšale to izkušnjo.</div>
 
           {!showReportInappropriateFeedback ? <UnhelpfulFeedbackContent /> : <ReportInappropriateFeedbackContent />}
 
-          <div>By pressing submit, your feedback will be visible to the application owner.</div>
+          <div>S pritiskom na Pošlji bo vaša povratna informacija vidna lastniku aplikacije.</div>
 
           <DefaultButton disabled={negativeFeedbackList.length < 1} onClick={onSubmitNegativeFeedback}>
-            Submit
+            Pošlji
           </DefaultButton>
         </Stack>
       </Dialog>

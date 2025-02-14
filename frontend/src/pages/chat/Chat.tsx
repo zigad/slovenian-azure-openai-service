@@ -40,9 +40,9 @@ import { AppStateContext } from "../../state/AppProvider";
 import { useBoolean } from "@fluentui/react-hooks";
 
 const enum messageStatus {
-  NotRunning = 'Not Running',
-  Processing = 'Processing',
-  Done = 'Done'
+  NotRunning = 'Ne teče',
+  Processing = 'Obdelava',
+  Done = 'Končano'
 }
 
 const Chat = () => {
@@ -69,7 +69,7 @@ const Chat = () => {
   const errorDialogContentProps = {
     type: DialogType.close,
     title: errorMsg?.title,
-    closeButtonAriaLabel: 'Close',
+    closeButtonAriaLabel: 'Zapri',
     subText: errorMsg?.subtitle
   }
 
@@ -81,7 +81,7 @@ const Chat = () => {
   }
 
   const [ASSISTANT, TOOL, ERROR] = ['assistant', 'tool', 'error']
-  const NO_CONTENT_ERROR = 'No content in messages object.'
+  const NO_CONTENT_ERROR = 'V sporočilu ni vsebine.'
 
   useEffect(() => {
     if (
@@ -90,7 +90,7 @@ const Chat = () => {
       appStateContext?.state.chatHistoryLoadingState === ChatHistoryLoadingState.Fail &&
       hideErrorDialog
     ) {
-      let subtitle = `${appStateContext.state.isCosmosDBAvailable.status}. Please contact the site administrator.`
+      let subtitle = `${appStateContext.state.isCosmosDBAvailable.status}. Obrnite se na skrbnika spletnega mesta.`
       setErrorMsg({
         title: 'Chat history is not enabled',
         subtitle: subtitle
@@ -275,7 +275,7 @@ const Chat = () => {
     } catch (e) {
       if (!abortController.signal.aborted) {
         let errorMessage =
-          'An error occurred. Please try again. If the problem persists, please contact the site administrator.'
+          'Prišlo je do napake. Prosim poskusite ponovno. Če težave ne odpravite, se obrnite na skrbnika spletnega mesta.'
         if (result.error?.message) {
           errorMessage = result.error.message
         } else if (typeof result.error === 'string') {
@@ -344,7 +344,7 @@ const Chat = () => {
       setMessages(request.messages)
     }
     let result = {} as ChatResponse
-    var errorResponseMessage = 'Please try again. If the problem persists, please contact the site administrator.'
+    var errorResponseMessage = 'Prišlo je do napake. Prosim poskusite ponovno. Če težave ne odpravite, se obrnite na skrbnika spletnega mesta.'
     try {
       const response = conversationId
         ? await historyGenerate(request, abortController.signal, conversationId)
@@ -356,7 +356,7 @@ const Chat = () => {
         let errorChatMsg: ChatMessage = {
           id: uuid(),
           role: ERROR,
-          content: `There was an error generating a response. Chat history can't be saved at this time. ${errorResponseMessage}`,
+          content: `TPri ustvarjanju odgovora je prišlo do napake. Zgodovine klepetov trenutno ni mogoče shraniti. ${errorResponseMessage}`,
           date: new Date().toISOString()
         }
         let resultConversation
@@ -465,7 +465,7 @@ const Chat = () => {
       }
     } catch (e) {
       if (!abortController.signal.aborted) {
-        let errorMessage = `An error occurred. ${errorResponseMessage}`
+        let errorMessage = `Prišlo je do napake. ${errorResponseMessage}`
         if (result.error?.message) {
           errorMessage = result.error.message
         } else if (typeof result.error === 'string') {
@@ -540,8 +540,8 @@ const Chat = () => {
       let response = await historyClear(appStateContext?.state.currentChat.id)
       if (!response.ok) {
         setErrorMsg({
-          title: 'Error clearing current chat',
-          subtitle: 'Please try again. If the problem persists, please contact the site administrator.'
+          title: 'Napaka pri čiščenju trenutnega klepeta',
+          subtitle: 'Prišlo je do napake. Prosim poskusite ponovno. Če težave ne odpravite, se obrnite na skrbnika spletnega mesta.'
         })
         toggleErrorDialog()
       } else {
@@ -580,11 +580,11 @@ const Chat = () => {
         // Returning the prettified error message
         if (reason !== '') {
           return (
-            'The prompt was filtered due to triggering Azure OpenAI’s content filtering system.\n' +
-            'Reason: This prompt contains content flagged as ' +
+            'Poziv je bil filtriran zaradi sprožitve sistema za filtriranje vsebine Azure OpenAI.\n' +
+            'Razlog: Ta poziv vsebuje vsebino, označeno kot ' +
             reason +
             '\n\n' +
-            'Please modify your prompt and retry. Learn more: https://go.microsoft.com/fwlink/?linkid=2198766'
+            'Prosimo, spremenite svoje vprašanje in poskusite znova. Več o tem: https://go.microsoft.com/fwlink/?linkid=2198766'
           )
         }
       }
@@ -657,7 +657,7 @@ const Chat = () => {
             .then(res => {
               if (!res.ok) {
                 let errorMessage =
-                  "An error occurred. Answers can't be saved at this time. If the problem persists, please contact the site administrator."
+                  "Prišlo je do napake. Odgovorov trenutno ni mogoče shraniti. Če težave ne odpravite, se obrnite na skrbnika spletnega mesta."
                 let errorChatMsg: ChatMessage = {
                   id: uuid(),
                   role: ERROR,
@@ -667,7 +667,7 @@ const Chat = () => {
                 if (!appStateContext?.state.currentChat?.messages) {
                   let err: Error = {
                     ...new Error(),
-                    message: 'Failure fetching current chat state.'
+                    message: 'Napaka pri pridobivanju trenutnega stanja klepeta.'
                   }
                   throw err
                 }
@@ -824,7 +824,7 @@ const Chat = () => {
                       <div className={styles.chatMessageError}>
                         <Stack horizontal className={styles.chatMessageErrorContent}>
                           <ErrorCircleRegular className={styles.errorIcon} style={{ color: 'rgba(182, 52, 67, 1)' }} />
-                          <span>Error</span>
+                          <span>Napaka</span>
                         </Stack>
                         <span className={styles.chatMessageErrorContent}>{typeof answer.content === "string" && answer.content}</span>
                       </div>
@@ -836,7 +836,7 @@ const Chat = () => {
                     <div className={styles.chatMessageGpt}>
                       <Answer
                         answer={{
-                          answer: "Generating answer...",
+                          answer: "Generiranje odgovora ...",
                           citations: [],
                           generated_chart: null
                         }}
@@ -856,13 +856,13 @@ const Chat = () => {
                   horizontal
                   className={styles.stopGeneratingContainer}
                   role="button"
-                  aria-label="Stop generating"
+                  aria-label="Ustavi"
                   tabIndex={0}
                   onClick={stopGenerating}
                   onKeyDown={e => (e.key === 'Enter' || e.key === ' ' ? stopGenerating() : null)}>
                   <SquareRegular className={styles.stopGeneratingIcon} aria-hidden="true" />
                   <span className={styles.stopGeneratingText} aria-hidden="true">
-                    Stop generating
+                    Ustavi
                   </span>
                 </Stack>
               )}
@@ -933,7 +933,7 @@ const Chat = () => {
               </Stack>
               <QuestionInput
                 clearOnSend
-                placeholder="Type a new question..."
+                placeholder="Napišite svoje vprašanje..."
                 disabled={isLoading}
                 onSend={(question, id) => {
                   appStateContext?.state.isCosmosDBAvailable?.cosmosDB
@@ -955,8 +955,8 @@ const Chat = () => {
                 className={styles.citationPanelHeaderContainer}
                 horizontalAlign="space-between"
                 verticalAlign="center">
-                <span aria-label="Citations" className={styles.citationPanelHeader}>
-                  Citations
+                <span aria-label="Reference" className={styles.citationPanelHeader}>
+                  Citati
                 </span>
                 <IconButton
                   iconProps={{ iconName: 'Cancel' }}
@@ -995,7 +995,7 @@ const Chat = () => {
                 horizontalAlign="space-between"
                 verticalAlign="center">
                 <span aria-label="Intents" className={styles.citationPanelHeader}>
-                  Intents
+                  Nameni
                 </span>
                 <IconButton
                   iconProps={{ iconName: 'Cancel' }}
@@ -1006,8 +1006,8 @@ const Chat = () => {
               <Stack horizontalAlign="space-between">
                 {appStateContext?.state?.answerExecResult[answerId]?.map((execResult: ExecResults, index) => (
                   <Stack className={styles.exectResultList} verticalAlign="space-between">
-                    <><span>Intent:</span> <p>{execResult.intent}</p></>
-                    {execResult.search_query && <><span>Search Query:</span>
+                    <><span>Nameni:</span> <p>{execResult.intent}</p></>
+                    {execResult.search_query && <><span>Iskalna poizvedba:</span>
                       <SyntaxHighlighter
                         style={nord}
                         wrapLines={true}
@@ -1016,8 +1016,8 @@ const Chat = () => {
                         PreTag="p">
                         {execResult.search_query}
                       </SyntaxHighlighter></>}
-                    {execResult.search_result && <><span>Search Result:</span> <p>{execResult.search_result}</p></>}
-                    {execResult.code_generated && <><span>Code Generated:</span>
+                    {execResult.search_result && <><span>Rezultat iskanja:</span> <p>{execResult.search_result}</p></>}
+                    {execResult.code_generated && <><span>Ustvarjena koda:</span>
                       <SyntaxHighlighter
                         style={nord}
                         wrapLines={true}

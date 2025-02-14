@@ -13,7 +13,7 @@ import styles from './Layout.module.css'
 const Layout = () => {
   const [isSharePanelOpen, setIsSharePanelOpen] = useState<boolean>(false)
   const [copyClicked, setCopyClicked] = useState<boolean>(false)
-  const [copyText, setCopyText] = useState<string>('Copy URL')
+  const [copyText, setCopyText] = useState<string>('Kopiraj URL')
   const [shareLabel, setShareLabel] = useState<string | undefined>('Share')
   const [hideHistoryLabel, setHideHistoryLabel] = useState<string>('Hide chat history')
   const [showHistoryLabel, setShowHistoryLabel] = useState<string>('Show chat history')
@@ -28,7 +28,7 @@ const Layout = () => {
   const handleSharePanelDismiss = () => {
     setIsSharePanelOpen(false)
     setCopyClicked(false)
-    setCopyText('Copy URL')
+    setCopyText('Kopiraj URL')
   }
 
   const handleCopyClick = () => {
@@ -48,7 +48,7 @@ const Layout = () => {
 
   useEffect(() => {
     if (copyClicked) {
-      setCopyText('Copied URL')
+      setCopyText('URL kopiran')
     }
   }, [copyClicked])
 
@@ -61,7 +61,7 @@ const Layout = () => {
         setHideHistoryLabel('Hide history')
         setShowHistoryLabel('Show history')
       } else {
-        setShareLabel('Share')
+        setShareLabel('Deli')
         setHideHistoryLabel('Hide chat history')
         setShowHistoryLabel('Show chat history')
       }
@@ -115,7 +115,7 @@ const Layout = () => {
           ]
         }}
         dialogContentProps={{
-          title: 'Share the web app',
+          title: 'Deli aplikacijo',
           showCloseButton: true
         }}>
         <Stack horizontal verticalAlign="center" style={{ gap: '8px' }}>
